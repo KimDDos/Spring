@@ -1,0 +1,46 @@
+Spring 사용 프로그램 : 
+        [ sts (spring tool site) => Eclipse 확장팩 (별도 프로그램으로 제공) ]
+	1) help - Eclipse Marrketplace로 설치도 가능하나 이 방법 안 쓸거임
+	2) Spring.io 사이트의 상단 네비바 - Project - Spring tool 4 - 
+	   제일 하단에 Spring 3 찾니? 라고 물어보는 wiki로 들어감
+	3) Spring boot 는 Spring tool 4 부터 적용이 가능함
+	4) Spring 3.9.18 이 최신이고, 이 버젼 Window 버젼을 다운로드 하면 됨
+	5) spring-tool-suite-3.9.18.RELEASE-e4.21.0-win32-x86_64\sts-bundle\sts-3.9.18.RELEASE\sts 실행하면 됨 ㅋ
+
+        [ maven => ]
+	1) maven repositary 에서 maven 을 복사해서 붙여넣기만 하면 사용 가능하게
+
+        [ Spring Framwork ]
+	기업을 대상으로 하는 개발이라는 말, 대규모 데이터 처리와 트랙잭션이 
+	동시에 여러 사용자로부터 행해지는 매우 큰 규모의 환경을 엔터프라이즈 환경이라 일컬음
+	기존의 방식은 클래스를 만들고, 멤버변수를 만들고 했다면 / 미리 다 만들어진 객체(bean)로 별도로 관리함
+	=> 이걸 IOC (Inversion Of Control) (제어의 역전 기반의 Framework를 의미) 
+	=> bin 이라는 객체에 담아서 Spring 컨테이너에 담아서 관리함 [해줄건 Dependency 로 붙여주기만 하면됨]
+	
+	Framwork  뼈대나 근간을 이루는 코드들의 묶음
+	특징 : DI(Dependency Input)를 통한 객체 간의 관계 구성 **제일 중요한 부분임**
+	        AOP(Aspect-Oriented-Programming) 지원
+	        편리한 MVC 구조 (뷰는 JSP 그대로, controller가 간편하게 바뀔 예정)
+	        WAS의 종속적이지 않은 개발 환경
+
+	xml설정 방식(살짝 구식임), 어노테이션 설정, java 설정 방식
+
+        [ lombok 라이브러리 설치 ]
+
+	getter / setter / tostring 을 자동 생성해주는 라이브러리임
+
+	프로그램 단위로 인식! / lombok은 한글경로를 인식하지 못 함! => sts.exe에 설치되는 라이브러리임
+	바로가기를 설정하면 경로가 깨져서 안되는 경우도 있음 / 그냥 하지마셈
+	알집으로는 전혀 시행 X , 반드시 반드집으로 사용
+	dependency 에도 적용해야함
+	exe에 심어서 작용되도록 만들어줘야함
+	설치 경로를 확인하려면 STS 파일 밑에 STS.ini 파일을 메모장으로 열고 확인이 필요
+	
+	java 1.8 뭐시기 에러가 뜨면 ini 파일에서 
+	openFile
+	-vmargs
+	-Dosgi.requiredJavaVersion=1.8 이렇게 일거임
+
+	
+	C:\Program Files\Java\jdk-11\bin\javaw.exe  로 인식시켜줘야 할거임
+	
