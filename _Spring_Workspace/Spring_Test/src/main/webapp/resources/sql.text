@@ -1,0 +1,23 @@
+-- 2023 - 12 -14
+
+-- database 생성
+create database springtest;
+
+-- users 생성
+create user 'springUser'@'localhost' identified by 'mysql'
+
+-- 권한 생성
+grant all privileges on springtest.*.* to 'springUser'@'localhost';
+
+-- 권한 설정 내용 메모리 반영
+flush privileges;
+
+create table board(
+bno varchar(100),
+title varchar(200),
+writer varchar(200),
+content text,
+isDel varchar(10) default 'N',
+ragdate datetime default now(),
+read_count int,
+primary key(bno));

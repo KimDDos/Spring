@@ -1,0 +1,161 @@
+Spring 에서는 로그인 처리는 자바설정에 시큐리티를 통해서 구현함
+
+부가적인 기능을 추가해서 자바 설정 이후에 프로젝트 진행
+
+Spring Boot 툴과 그레이드 설정 방식과 Boot에서는 어떻게 하는지?
+boot에서는 JSP 사용 X, 타임리프 라이브러리를 통해 구성을 하는중
+
+스프링으로 할지? 스프링 부트로 할지? 결정해서 파이널 프로젝트 진행
+
+spring 개인 프로젝트 제출할 예정 => 기본 프로젝트인거임
+
+[Spring 설정]
+
+1. lombok 설정
+2. Server 설정 : Spring은 기본적으로 반영구적 VM 서버를 지원하나 바꿀수 있음
+	단, boot는 변경 X
+	file > new > Spring Legacy Project > MVC 
+	package 명으 회사 도메인의 역순이거나 정해진 규칙에 맞춰서 3단계 .으로 이루어져야함
+	com.ezen.www  <<< 이렇게
+	src/main/java > com.ezen.www > 콘트롤러, 매퍼, 등등
+	src/test/java > TEST를 해볼수있도록 지원해줌
+	DB설정은 Spring에서 하지 않음
+	src>naib>webapp>resoutces : JS, image, txt 등 보관
+	src>naib>webapp>WEB-INF>spring>appServlet : servlet-context 설정을 여기서함
+	src>naib>webapp>WEB-INF>views : 모든 JSP 작성
+	target>pom.xml : 라이브러리를 붙이는 곳
+
+
+3. Servlet-context.xml
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		앞에 붙여주는것에 대한 내용
+		<beans:property name="suffix" value=".jsp" />
+		뒤에 붙여주는 내용
+	</beans:bean>
+
+	<context:component-scan base-package="com.ezen.www" />
+	bean이라는 객체는 라이브러리를 업데이트하면 자동으로 생기는데
+	컴포넌트는 내가 만드는 객체를 사용해야 할 때, component 어노테이션을 활용해 활용 할 수 있음
+	자동적으로 bean으로 등록해주기 위해서 넣는 것임
+
+4. root-context
+	DB 설정을 위한 내용임
+
+5. web.xml
+	Servlet에 대한 설정
+
+6. pom.xml
+	라이브러리에 Dependency만 넣는것이 아님
+
+설정할때 preference와 project properties 설정 수정후 xml도 수정
+<properties>
+		<java-version>11</java-version> 여기
+		<org.springframework-version>5.3.10</org.springframework-version> 여기
+		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<org.slf4j-version>1.6.6</org.slf4j-version>
+	</properties>
+
+<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>11</source>  여기
+                    <target>11</target>  여기
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+
+Servlet API dependency 수정
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>4.0.1</version>
+		    <scope>provided</scope>
+		</dependency>
+
+추가되어 있는 라이브러리 : log4j, slf4j
+추가한 라이브러리
+lombok
+mysql connector
+mybatis
+mybatis spring
+spring-security-core
+spring-security-config
+spring-security-web  => properties에 -version을 추가해서 
+dependency에 버젼에 ${org.springframework.security-version} 으로 
+넣어서 관리하면 동일한 버젼으로 유지할 수 있음
+=> spring 버젼을 따라감
+spring-jdbc
+spring-test
+
+# <scope></scope> => 이 범우;에서만 
+
+7. swb.xml
+filter 추가
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+나가는 응답 데이터 필터처리 필요시 아래 입력
+           <init-param>
+                <param-name>forceEncoding</param-name>
+                <param-value>true</param-value>
+           </init-param>
+
+8. root-context.xml  
+-> 스프링에서 DB연결을 위해 세팅하는 xml임
+-> Namespaces 에서 bean 설정을 해줘야함
+-> Namespaces에 추가한 라이브러리가 안 나온다면 maven 업데이트를 하지 않은것
+-> security는 별도 xml으로 설정할 예정으로 추가 X
+
+[org.springframework.jdbc.datasource.DriverManagerDataSource]
+
+9. secrity-context.xml
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		
+	</bean>
+
+db설정
+db명 : springtest 
+user : springUser
+password : mysql
+
+계정은 root
+-- database 생성
+create database springtest;
+
+-- users 생성
+create user 'springUser'@'localhost' identified by 'mysql'
+
+-- 권한 생성
+grant all privileges on springtest.*.* to 'springUser'@'localhost' identified by 'mysql';
+
+-- 권한 설정 내용 메모리 반영
+flush privileges;
+
+-- 2023- 12 -14 --
+create table board(
+bno varchar(100),
+title varchar(200),
+writer varchar(200),
+content text,
+isDel varchar(10) default 'N',
+ragdate datetime default now(),
+read_count int,
+primary key(bno));
+
+@ layout
