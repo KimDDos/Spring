@@ -13,4 +13,10 @@ public interface BoardService {
 	BoardVO getDetail(int bno);
 
 	int readCount(int bno);
+
+	void modify(BoardVO bvo);
+
+	int remove(int bno);
+
+	void countDown(int bno);
 }

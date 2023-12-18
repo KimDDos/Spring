@@ -13,5 +13,11 @@ public interface BoardDAO {
 	int countUp(int bno);
 
 	BoardVO selectOne(int bno);
+
+	void modify(BoardVO bvo);
+
+	int delete(int bno);
+
+	void down(int bno);
 	
 }

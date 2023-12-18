@@ -29,5 +29,12 @@
 	  </tbody>
 	</table>
 </div>
-
+<<script type="text/javascript">
+	const isDel = `<c:out value="${isDel}" />`;
+	if(isDel == '1'){
+		alert("게시글이 삭제되었습니다.");
+	} else if(isDel == '0') {
+		alert("게시글 삭제 실패~!");
+	}
+</script>
 <jsp:include page="../layout/footer.jsp"></jsp:include>

@@ -21,4 +21,17 @@
 		select * from board where bno = #{bno} 
 	</select>
 	
+	<update id="modify" parameterType="com.ezen.www.domain.BoardVO">
+		update board set title=#{title}, content=#{content} where bno=#{bno}
+	</update>
+	
+	<update id="delete" parameterType="int">
+		<!-- delete from board where bno=#{bno} -->
+		update board set isDel='Y' where bno=#{bno}
+	</update>
+	
+	<update id="down">
+		update board set read_count = read_count - 1 where bno = #{bno}
+	</update>
+	
 </mapper>

@@ -6,7 +6,9 @@
 <jsp:include page="../layout/header.jsp"></jsp:include>
 
 <div class="container-md">
+	
 	<div class="mb-3">
+	  <input type="hidden" class="form-control" id="bno" name="bno" value="${bvo.bno}">
 	  <label for="title" class="form-label">Title</label>
 	  <input type="text" class="form-control" id="title" name="title" value="${bvo.title}" readonly="readonly">
 	</div>

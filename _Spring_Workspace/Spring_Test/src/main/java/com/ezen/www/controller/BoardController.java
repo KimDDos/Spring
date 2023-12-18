@@ -1,5 +1,7 @@
 package com.ezen.www.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.www.domain.BoardVO;
 import com.ezen.www.service.BoardService;
@@ -72,11 +75,23 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO bvo) {
+	public String modify(BoardVO bvo, Model m) {
 		log.info("modify >>>>> {}", bvo);
-		
-		
+		bsv.modify(bvo);
+		bsv.countDown(bvo.getBno());
+		m.addAttribute("bno",bvo.getBno());
 		return "redirect:/board/detail";   // bno가 필요함
+	}
+	
+	@GetMapping("/delete")
+	public String remove(@RequestParam("bno") int bno, RedirectAttributes re) {
+		log.info("bno >>>> {}", bno);
+		int isOk = bsv.remove(bno);
+		// 페이지가 새로고침 될 때 남아있을 필요가 없는 데이터
+		// 리다이렉트 될 때 데이터를 보내는 객체( RedirectAttribute )
+		// 한번만 일회성으로 데이터를 보낼때 사용
+		re.addFlashAttribute("isDel", isOk);
+		return "redirect:/board/list";
 	}
 	
 }

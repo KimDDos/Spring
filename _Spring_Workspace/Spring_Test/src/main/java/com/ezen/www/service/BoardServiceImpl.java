@@ -34,10 +34,6 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO getDetail(int bno) {
-		String path = request.getServletPath();
-		if(path.equals("/board/detail")) {
-			readCount(bno);
-		}
 		return bdao.selectOne(bno);
 	}
 
@@ -47,9 +43,19 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardVO getDetail(int bno) {
-		// TODO Auto-generated method stub
-		return null;
+	public void modify(BoardVO bvo) {
+		bdao.modify(bvo);
 	}
+
+	@Override
+	public int remove(int bno) {
+		return bdao.delete(bno);
+	}
+
+	@Override
+	public void countDown(int bno) {
+		bdao.down(bno);
+	}
+
 	
 }
