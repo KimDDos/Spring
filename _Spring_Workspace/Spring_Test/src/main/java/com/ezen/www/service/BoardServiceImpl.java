@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ezen.www.domain.BoardVO;
+import com.ezen.www.domain.PagingVO;
 import com.ezen.www.repository.BoardDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +29,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardVO> getList() {
-		return bdao.selectList();
+	public List<BoardVO> getList(PagingVO pgvo) {
+		return bdao.selectList(pgvo);
 	}
 
 	@Override
@@ -55,6 +56,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void countDown(int bno) {
 		bdao.down(bno);
+	}
+
+	@Override
+	public int getTotalCount() {
+		return bdao.getTotalCount();
 	}
 
 	

@@ -14,4 +14,6 @@ public interface MemberDAO {
 
 	int modNoPw(MemberVO mvo);
 
+	int remove(String id);
+
 }

@@ -21,8 +21,8 @@
 		update member set  home=#{home}, email=#{email}, name=#{name}, age=#{age}, pw=#{pw} where id=#{id} 
 	</update>
 	
-	<update id="modNoPw">
-		update member set home=#{home}, email=#{email}, name=#{name}, age=#{age} where id=#{id}
-	</update>
+	<delete id="remove">
+		delete from member where id=#{id}
+	</delete>
 
 </mapper>

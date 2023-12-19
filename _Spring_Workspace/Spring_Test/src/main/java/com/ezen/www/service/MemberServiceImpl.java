@@ -1,6 +1,7 @@
 package com.ezen.www.service;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Inject
 	private MemberDAO mdao;
+	
+    @Inject
+    HttpServletRequest request;
 	
 	@Inject
 	BCryptPasswordEncoder passwordEncoder;
@@ -82,17 +86,27 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int modify(MemberVO mvo) {
+		log.info("update service impl check");
+        String pw = mvo.getPw();
 		// 공통 : ID 스정은 못하게
 		// 비밀번호도 수정할때
 		if(mvo.getPw() == null || mvo.getPw().length() == 0) {
-			return mdao.modNoPw(mvo);
-		} else {
-			String pw = mvo.getPw();
-			String encodePw = passwordEncoder.encode(pw);  // 패스워드 암호화
-			mvo.setPw(encodePw);
-			return mdao.mod(mvo);
-		} 
+			MemberVO sesMvo = (MemberVO)request.getSession().getAttribute("ses");
+			mvo.setPw(sesMvo.getPw());
+		} else{
+		    String encodePw = passwordEncoder.encode(pw); // 패스워드 암호화
+		    mvo.setPw(encodePw);
+		}
+	    log.info(">>> pw 수정후 mvo >> {}", mvo);
+		return mdao.mod(mvo);
+		// DB를 자주 건드는것보다 콘트롤러와 서비스에서 모두를 처리하는 것이 좋음
+		// DB 처리 비용이 더 비싸기 때문에 자바에서 처리하고 DB에서 하나만 처리하는것이 더 바람직함
 		
-		// 비밀번호는 미수정할때
 	}
+
+	@Override
+	public int remove(String id) {
+		return mdao.remove(id);
+	}
+
 }

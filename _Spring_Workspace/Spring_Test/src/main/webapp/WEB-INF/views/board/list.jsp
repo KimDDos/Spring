@@ -28,6 +28,33 @@
 	  </c:forEach>
 	  </tbody>
 	</table>
+	<div class="paging-bar-container" style="display: flex; justify-content: center;">
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination">
+		  	<!-- prev -->
+		  	<c:if test="${ph.prev}">
+			    <li class="page-item">
+			      <a class="page-link" href="/board/list?pageNo=${ph.startPage - 1}&qty=${ph.pgvo.qty}" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+		    </c:if>
+		    <!-- paging No -->
+		    <c:forEach begin="${ph.startPage }" end="${ph.endPage}" var="i">
+			    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${i}&qty=${ph.pgvo.qty}">${i}</a></li>
+		    </c:forEach>
+		    <!-- Next -->
+		    <c:if test="${ph.next}">
+			    <li class="page-item">
+			      <a class="page-link" href="/board/list?pageNo=${ph.endPage + 1}&qty=${ph.pgvo.qty}" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+		    </c:if>
+		  </ul>
+		</nav>
+    </div>
+	
 </div>
 <<script type="text/javascript">
 	const isDel = `<c:out value="${isDel}" />`;

@@ -42,7 +42,7 @@
         </c:if>
         <c:if test="${ses.id ne null }">
 	        <li class="nav-item">
-	          <a class="nav-link" href="/member/modify">${ses.id }(${ses.email}) Welcome!</a>
+	          <a class="nav-link" href="/member/modify">${ses.name }님(${ses.email}) Welcome!</a>
 	        </li>
         </c:if>
       </ul>

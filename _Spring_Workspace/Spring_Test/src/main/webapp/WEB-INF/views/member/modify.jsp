@@ -31,6 +31,7 @@
 		  <input type="text" class="form-control" name="age" id="age" value="${ses.age}">
 		</div>
 		<button type="submit" class="btn btn-primary">Modify</button>
+		<a href="/member/remove?id=${ses.id}"><button type="button" class="btn btn-danger">Delete</button></a>
 	</form>
 </div>
 

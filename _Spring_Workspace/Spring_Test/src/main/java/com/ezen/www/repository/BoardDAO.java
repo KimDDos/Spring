@@ -3,12 +3,13 @@ package com.ezen.www.repository;
 import java.util.List;
 
 import com.ezen.www.domain.BoardVO;
+import com.ezen.www.domain.PagingVO;
 
 public interface BoardDAO {
 
 	int insert(BoardVO bvo);
 
-	List<BoardVO> selectList();
+	List<BoardVO> selectList(PagingVO pgvo);
 
 	int countUp(int bno);
 
@@ -19,5 +20,7 @@ public interface BoardDAO {
 	int delete(int bno);
 
 	void down(int bno);
+
+	int getTotalCount();
 	
 }
