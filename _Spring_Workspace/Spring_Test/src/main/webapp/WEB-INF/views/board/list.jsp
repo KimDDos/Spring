@@ -6,6 +6,34 @@
 <jsp:include page="../layout/header.jsp"></jsp:include>
 
 <div class="container-md">
+	<h2> Board List Page </h2>
+	<br>
+	
+	<!-- 검색라인 -->
+	<div>
+		<form action="/board/list">
+			<div class="input-group mb-3">
+				<select class="form-select" name="type">
+					<c:set value="${ph.pgvo.type }" var="typed"></c:set>
+					<option ${typed == null ? 'selected' : '' }> Choose </option>
+					<option value="t" ${typed == 't' ? 'selected' : '' }> Title </option>
+					<option value="w" ${typed == 'w' ? 'selected' : '' }> Writer </option>
+					<option value="c" ${typed == 'c' ? 'selected' : '' }> Content </option>
+					<option value="tc" ${typed == 'tc' ? 'selected' : '' }> Title & Content </option>
+					<option value="tw" ${typed == 'tw' ? 'selected' : '' }> Title & Writer </option>
+					<option value="wc" ${typed == 'wc' ? 'selected' : '' }> Writer & Content </option>
+					<option value="twc" ${typed == 'twc' ? 'selected' : '' }> All </option>
+				</select>
+				<input class="form-control me-2" type="text" name="keyword" value="${ph.pgvo.keyword}" placeholder="Search...">
+				<input type="hidden" name="pageNo" value="${ph.pgvo.pageNo }" placeholder="1">
+				<input type="hidden" name="qty" value="${ph.pgvo.qty }" placeholder="10">
+				<button type="submit" class="btn btn-outline-success">
+					Search<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">${totalCount }</span>
+				</button>
+			</div>
+		</form>
+	</div>
+	
 	<table class="table">
 	  <thead>
 	    <tr>
@@ -34,25 +62,31 @@
 		  	<!-- prev -->
 		  	<c:if test="${ph.prev}">
 			    <li class="page-item">
-			      <a class="page-link" href="/board/list?pageNo=${ph.startPage - 1}&qty=${ph.pgvo.qty}" aria-label="Previous">
+			      <a class="page-link" href="/board/list?pageNo=${ph.startPage - 1}&qty=${ph.pgvo.qty}&type=${ph.pgvo.type}&keyword=${ph.pgvo.keyword}" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
 		    </c:if>
 		    <!-- paging No -->
 		    <c:forEach begin="${ph.startPage }" end="${ph.endPage}" var="i">
-			    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${i}&qty=${ph.pgvo.qty}">${i}</a></li>
+			    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${i}&qty=${ph.pgvo.qty}&type=${ph.pgvo.type}&keyword=${ph.pgvo.keyword}">${i}</a></li>
 		    </c:forEach>
 		    <!-- Next -->
 		    <c:if test="${ph.next}">
 			    <li class="page-item">
-			      <a class="page-link" href="/board/list?pageNo=${ph.endPage + 1}&qty=${ph.pgvo.qty}" aria-label="Next">
+			      <a class="page-link" href="/board/list?pageNo=${ph.endPage + 1}&qty=${ph.pgvo.qty}&type=${ph.pgvo.type}&keyword=${ph.pgvo.keyword}" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>
 		    </c:if>
+		    <li class="page-item">
+		      <a class="page-link" href="/board/list">
+		        <span aria-hidden="true">전체보기</span>
+		      </a>
+		    </li>
 		  </ul>
 		</nav>
+		
     </div>
 	
 </div>

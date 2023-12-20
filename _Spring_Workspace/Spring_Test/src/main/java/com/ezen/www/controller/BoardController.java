@@ -53,14 +53,18 @@ public class BoardController {
 	// /board/list  =>  /board/list void 처리해도 상관없음.
 	@GetMapping("/list")
 	public String list(Model m, PagingVO pgvo) {
-		log.info("list pgvo >>>> {}", pgvo);
+		log.info("list pgvo >>>> {}", pgvo);  // pageNo, qty, type, keyword
+		// getparameter로 하나씩 받아올때 null이면 에러가 나지만, 객체 자체가 널이 아니기에 널 포인트는 뜨지 않음!
+		// 만약에 pgvo에 타입이 키워드가 널인 상태에서 pgvo의 get타입을 뺄 때 null이면 null에러가 나옴!
 		// 리턴 타입은 목적지 경로에 대한 타입 (destPage가 리턴이라고 생각)
 		// Model 객체  =>  setAttribute 역할을 하는 객체
 		m.addAttribute("list", bsv.getList(pgvo));
 		
 		// ph 객체 다시 생성 (pgvo, totalCount)
-		int totalCount = bsv.getTotalCount();
+		int totalCount = bsv.getTotalCount(pgvo);
+		log.info("totalCount >>> {}", totalCount);
 		m.addAttribute("ph", new PagingHandler(pgvo, totalCount));
+		m.addAttribute("totalCount", totalCount);
 		return "/board/list";
 	
 	}

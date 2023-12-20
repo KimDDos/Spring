@@ -21,5 +21,5 @@ public interface BoardService {
 
 	void countDown(int bno);
 
-	int getTotalCount();
+	int getTotalCount(PagingVO pgvo);
 }
