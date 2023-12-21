@@ -183,7 +183,22 @@
 		    <version>${org.springframework.security-version}</version>
 		</dependency>
 		       
-		       
+		<!-- 댓글관련 : json -->
+		<!-- jackson-databind -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+		<!-- jackson-dataformat-xml -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+				
+				
+        
 		       
 	</dependencies>
     <build>

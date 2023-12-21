@@ -1,0 +1,5 @@
+// method 
+   1. post : 생성(Create)
+   2. get : 조회(Read)
+   3. put(patch) : 수정(update), 부분적인 수정을 할 때 사용
+   4. delete : 삭제(delete)
