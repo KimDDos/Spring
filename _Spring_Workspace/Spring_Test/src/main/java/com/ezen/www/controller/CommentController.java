@@ -68,7 +68,16 @@ public class CommentController {
 	 HttpStatus.OK) : new ResponseEntity<String>("0",
 	 HttpStatus.INTERNAL_SERVER_ERROR); }
 	 
-	 @PutMapping(value="/{cnoVal}", consumes = "application/json", produces = MediaType.TEXT_PLAIN_VALUE)
+	/*
+	 * @PutMapping(value="/{cnoVal}", consumes = "application/json", produces =
+	 * MediaType.TEXT_PLAIN_VALUE) public ResponseEntity<String> modify(@RequestBody
+	 * CommentVO cvo){ log.info(">>> cvo >>> {}", cvo); int isOk = csv.modify(cvo);
+	 * return isOk > 0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new
+	 * ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR); }
+	 * 들어오는 데이터의 타입이 변경되지 않는다면 consumes을 안 적어줘도 됨 ㅎ 
+	 */
+	 
+	 @PutMapping("/modify")
 	 public ResponseEntity<String> modify(@RequestBody CommentVO cvo){
 		 log.info(">>> cvo >>> {}", cvo);
 		 int isOk = csv.modify(cvo);

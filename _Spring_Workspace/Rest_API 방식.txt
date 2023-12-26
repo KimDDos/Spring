@@ -1,5 +1,11 @@
-// method 
+23-12-21
+
+1. method 
    1. post : 생성(Create)
    2. get : 조회(Read)
    3. put(patch) : 수정(update), 부분적인 수정을 할 때 사용
    4. delete : 삭제(delete)
+
+2. json 라이브러리 추가
+jackson.core 2.13.0
+jackson.dataformat 2.13.0

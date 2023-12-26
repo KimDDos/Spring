@@ -1,0 +1,94 @@
+-- file upload
+
+1. 라이브러리 설정
+commons-fileupload 1.4
+		<!-- commons-fileupload -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
+commons-io 2.11.0
+		<!-- commons-io -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.11.0</version>
+		</dependency>
+
+thumnailator 0.4.14
+
+		<!-- thumbnailator -->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.14</version>
+		</dependency>
+
+tika-core 2.4.1  =>  파일 종류 확인용 (그림파일인지 체크)
+
+		<!-- tika-core -->
+		<dependency>
+		    <groupId>org.apache.tika</groupId>
+		    <artifactId>tika-core</artifactId>
+		    <version>2.4.1</version>
+		</dependency>
+
+tika-parsers 2.4.1  =>  파일 확장자를 일일히 확인 안해도 되게 만들어주는 라이브러리임					
+	              <!-- tika-parser-text-module -->
+		<dependency>
+		    <groupId>org.apache.tika</groupId>
+		    <artifactId>tika-parser-text-module</artifactId>
+		    <version>2.4.1</version>
+		</dependency>
+
+- 파일을 저장할 폴더를 구분
+D:\KDY\_myProject\_java\_fileUpload
+
+2. 파일 설정
+web.xml  
+[xml안에서 계산은 이뤄지지 않기에 계산된 값을 넣기]
+ - multipart-config 설정
+ - 파일에 대한 경로, Location을 설정
+ - max-file-size : 업로드 되는 파일의 max 크기 
+	(일반적으로 20mb 1024*1024*20 = 20971520)
+ - max-request-size : 요청에 대한 최대 크기 40Mb 
+	1024*1024*40 = 41943040
+ - file-size-threshold : 임시 기록 용량, max-file-size와 동일하게 구성
+	1024*1024*20 = 20971520
+
+ - servlet 안에 > <load-on-startup>1</load-on-startup> 뒤
+	<multipart-config>
+		<location>D:\KDY\_myProject\_java\_fileUpload</location>
+		<max-file-size>20971520</max-file-size>
+		<max-request-size>41943040</max-request-size>
+		<file-size-threshold>20971520</file-size-threshold>
+	</multipart-config>
+
+servlet-context.xml 경로 설정 (멀티파트의 resolve를 설정해야함)
+ - location : 파일 경로
+ - <resources mapping="/upload/**" location="file:///D:\KDY\_myProject\_java\_fileUpload\" />
+	실제 파일의 경로에 file:// 붙여주는거 잊으면 안 됨
+ - multipartResolver : StandardServletMultipartResolver
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	</beans:bean>
+
+3. file 테이블 생성
+create table file(
+uuid varchar(256) not null,
+save_dir varchar(256) not null,
+file_name varchar(256) not null,
+file_type tinyint(1) default 0,
+bno int,
+file_size int,
+reg_date datetime default now(),
+primary key(uuid));
+
+4. fileVO 생성
+
+5. boardVO / fileVO  =>  BoardDTO를 따로 만들거임
+
+6. file Handler 생성
+ - 
+
+7. board/register  >  fileUpload 인풋 만들고 multiple 속성 넣고 반영
