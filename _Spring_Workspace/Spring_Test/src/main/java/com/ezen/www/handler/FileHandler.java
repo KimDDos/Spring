@@ -41,7 +41,9 @@ public class FileHandler {
 		 
 		 File folders = new File(UP_DIR, today);
 		 if(!folders.exists()) {
-			 folders.mkdir();  // 폴더생성 명령 mkdir(폴더 1개 생성)
+			 folders.mkdirs();  
+			 // 폴더생성 명령 mkdir(폴더 1개 생성)
+			 // 폴더생성 명령 mkdirs(폴더 여러개 생성)
 		 }
 		 
 		 for(MultipartFile file : files) {
@@ -53,7 +55,7 @@ public class FileHandler {
 			 log.info(">>> getName >> {}", file.getName());
 			 log.info(">>> getOriginalFilename >> {}", file.getOriginalFilename());
 			 
-			 // 파일이름
+			 // 파일이름(originalName()) : 파일 경로를 포함하고 있을 수도 있음
 			 String originalFileName = file.getOriginalFilename();
 			 String onlyFileName = originalFileName.substring(originalFileName.lastIndexOf(File.separator)+1);
 			 fvo.setFile_name(onlyFileName);
@@ -74,24 +76,18 @@ public class FileHandler {
 			 // 저장 => 폴더가 없거나, 저장 파일이 없다면 io exception 발생
 			 try {
 				file.transferTo(storeFile);  // 저장
-				
 				// 파일 타입을 결정 => 이미지 파일일때만 썸네일 설정.
 				if(isImageFile(storeFile)) {
 					fvo.setFile_type(1);
 					File thumbNail = new File(folders, uuidStr + "_th_" + onlyFileName);
 					Thumbnails.of(storeFile).size(75, 75).toFile(thumbNail);
 				}
-				
-				
 			} catch (Exception e) {
 				log.info(">>> file 저장 에러 <<<");
 				e.printStackTrace();
 			}
-			 
 			 flist.add(fvo);
-			 
 		 }
-		
 		return flist;
 	} 
 	

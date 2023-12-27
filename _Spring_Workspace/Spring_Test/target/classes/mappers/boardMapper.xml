@@ -42,6 +42,11 @@
 		select count(bno) from board where isDel = 'N' <include refid="search"></include>
 	</select>
 	
+	<select id="selectBno" resultType="int">
+		select max(bno) from board
+		<!-- select bno from board order by bno desc limit 0 --> 
+	</select>
+	
 	<!-- select * from board where isDel = 'N' and ( or .. or ..) -->
 	
 	<sql id="search">
