@@ -1,0 +1,68 @@
+board table 댓글개수, 파일 갯수가 들어가 있는 filed 추가
+
+댓글 개수, 파일 개수
+commentCount, filedCount
+
+alter table board add commentCount int default 0;
+alter table board add filedCount int default 0;
+
+-- bno가 일치하는 comment의 count를 세어서 commentCount에 update 하기 
+
+update board b set commentCount = 
+(select count(bno) from comment c where c.bno = b.bno)
+
+select bno, title, writer, content, isDel, regdate, read_count, (
+select count(bno) 
+from comment c 
+where c.bno = b.bno) as commentCount , (
+select count(bno) 
+from file f 
+where f.bno = b.bno) 
+as filedCount 
+from board b
+
+-- 외래키는 보통 완료하고나서 넣음 --
+-- why? test나 여러 부분에서 규칙에 위배되면 에러가 나기때문에 테스트하기 어려움 --
+삭제구문
+delete from board;
+delete from member;
+delete from comment;
+delete from file;
+
+alter table comment 
+add foreign key(bno) 
+references board(bno); [옵션]
+on delete cascade(삭제할때 같이)
+on update cascade(수정할때 같이)
+
+[작성 예시 : 2가지 옵션을 같이 넣을때]
+alter table comment 
+add foreign key(bno) 
+references board(bno)
+on delete cascade;
+
+alter table board
+add foreign key(writer) 
+references member(id)
+on delete cascade;
+
+alter table file 
+add foreign key(bno) 
+references board(bno)
+on delete cascade;
+
+
+auto_increment 초기화
+alter table [테이블명] auto_increment = [입력할 값];
+// 초기화할때 다른 값들이 있을때 초기화하는 값보다 높은 값이 있으면 안 됨
+alter table board auto_increment = 1;
+alter table comment auto_increment = 1;
+
+다른방법 (1) 
+ALTER TABLE [테이블명] AUTO_INCREMENT=1;
+SET @COUNT = 0;
+UPDATE [테이블명] SET [AUTO_INCREMENT 열 이름] = @COUNT:=@COUNT+1;
+
+alter table board auto_increment=1;
+set bno = 0;
+update board set bno = bno + 1;

@@ -41,6 +41,8 @@
 	      <th scope="col">Title</th>
 	      <th scope="col">writer</th>
 	      <th scope="col">Regdate</th>
+	      <th scope="col">Comment Count</th>
+	      <th scope="col">File Count</th>
 	      <th scope="col">ReadCount</th>
 	    </tr>
 	  </thead>
@@ -51,6 +53,8 @@
 	      <td><a href="/board/detail?bno=${bvo.bno}">${bvo.title }</a></td>
 	      <td>${bvo.writer }</td>
 	      <td>${bvo.regdate }</td>
+	      <td>${bvo.commentCount }</td>
+	      <td>${bvo.filedCount }</td>
 	      <td>${bvo.read_count }</td>
 	    </tr>
 	  </c:forEach>

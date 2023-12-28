@@ -16,7 +16,7 @@ public interface BoardService {
 
 	int readCount(int bno);
 
-	void modify(BoardVO bvo);
+	int modify(BoardDTO bdto);
 
 	int remove(int bno);
 
@@ -25,4 +25,6 @@ public interface BoardService {
 	int getTotalCount(PagingVO pgvo);
 
 	int deleteFile(String uuid);
+
+	int updateCount();
 }

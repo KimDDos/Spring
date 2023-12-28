@@ -57,7 +57,7 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(BoardVO bvo, @RequestParam(name="files", required = false) MultipartFile[] files) {
 		log.info("register bvo >>>>> {}", bvo);
-		log.info("files >>>> {}", files.toString());
+		/* log.info("files >>>> {}", files.toString()); */
 		// fileHandler 처리
 		List<FileVO> flist = null;
 		
@@ -65,6 +65,7 @@ public class BoardController {
 		if(files[0].getSize() > 0) {
 			flist = fhd.uploadFiles(files);
 			log.info(">>>> flist >> {}", flist);
+			bvo.setFiledCount(flist.size());
 		} else {
 			log.info("file null");
 		}
@@ -115,9 +116,22 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO bvo, Model m) {
+	public String modify(BoardVO bvo, Model m, @RequestParam(name="files", required = false) MultipartFile[] files) {
 		log.info("modify >>>>> {}", bvo);
-		bsv.modify(bvo);
+		/* log.info("modify files >>>> {}", files.toString()); */
+		// fileHandler 처리
+		List<FileVO> flist = null;
+		
+		// 파일이 있을 경우만 fhd 호출
+		if(files[0].getSize() > 0) {
+			flist = fhd.uploadFiles(files);
+			log.info(">>>> flist >> {}", flist);
+		} else {
+			log.info("file null");
+		}
+		
+		BoardDTO bdto = new BoardDTO(bvo, flist);
+		int isOk = bsv.modify(bdto);
 		bsv.countDown(bvo.getBno());
 		m.addAttribute("bno",bvo.getBno());
 		return "redirect:/board/detail";   // bno가 필요함

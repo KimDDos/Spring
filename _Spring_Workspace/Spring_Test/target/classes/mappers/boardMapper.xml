@@ -11,11 +11,25 @@
 	
 	<select id="selectList" resultType="com.ezen.www.domain.BoardVO">
 		select * from board
-		 where isDel ='N' 
-		 <include refid="search"/>
-		 order by bno desc 
-		 limit #{pageStart}, #{qty}
+		where isDel ='N' 
+		<include refid="search"/>
+		order by bno desc 
+		limit #{pageStart}, #{qty}
 	</select>
+	
+	<update id="updateCount">
+		update board b 
+		set
+		commentCount = (
+		select count(bno) 
+		from comment c 
+		where c.bno = b.bno), 
+		
+		filedCount = (
+		select count(bno) 
+		from file f 
+		where f.bno = b.bno)
+	</update>
 	
 	<update id="countUp" parameterType="int">
 		update board set read_count = read_count + 1 where bno = #{bno}

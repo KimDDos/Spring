@@ -42,3 +42,7 @@ writer varchar(100) not null,
 content varchar(500),
 reg_date datetime default now(),
 primary key(cno));
+
+-- 2023-12-28 --
+alter table board add commentCount int default 0;
+alter table board add filedCount int default 0;

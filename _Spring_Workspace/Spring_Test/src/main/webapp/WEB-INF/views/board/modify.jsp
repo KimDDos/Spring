@@ -7,7 +7,7 @@
 
 <div class="container-md">
 	<c:set value="${boardDTO.bvo }" var="bvo"/>
-	<form action="/board/modify" method="post">
+	<form action="/board/modify" method="post" enctype="multipart/form-data">
 	<input type="hidden" class="form-control" id="bno" name="bno" value="${bvo.bno}">
 	<div class="mb-3">
 		<label for="title" class="form-label">Title</label>
@@ -67,9 +67,21 @@
 			</ul>
 		</div>
 	</div>
+	<!-- file 입력 라인 추가 -->
+	<div class="mb-3">
+		<label for="file" class="form-label">Files....</label> <input
+			type="file" class="form-control" name="files" id="file"
+			multiple style="display: none"> <br>
+		<button type="button" class="btn btn-primary" id="trigger">FileUpload</button>
+	</div>
+	
+	<!-- 파일 목록 표시라인 -->
+	<div class="mb-3" id="fileZone">
+		
+	</div>
 	
 	<a href="/board/delete?bno=${bvo.bno}"><button type="button" class="btn btn-success">Delete</button></a>
-	<a href="/board/modify?bno=${bvo.bno}"><button type="submit" class="btn btn-success">Modify</button></a>
+	<a href="/board/modify?bno=${bvo.bno}"><button type="submit" class="btn btn-success regBtn">Modify</button></a>
 	</form>
 </div>
 
